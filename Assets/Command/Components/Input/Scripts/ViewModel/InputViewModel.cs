@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace MyCommand
@@ -19,6 +20,11 @@ namespace MyCommand
         public void UpdateMove(Vector2 value)
         {
             _inputModel.UpdateMove(value);
+        }
+
+        public void OnAnyAction(InputAction.CallbackContext context)
+        {
+            _inputModel.OnAnyAction(context);
         }
     }
 }

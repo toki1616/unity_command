@@ -490,18 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1046e48b19603b2448ba35385fb6f72a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveAction:
-    m_UseReference: 1
-    m_Action:
-      m_Name: Move
-      m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 70f0f759-7cb7-41e7-aca6-5011b648b706
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
-      m_Flags: 0
-    m_Reference: {fileID: -3247651862401018880, guid: 4043aa712d0f91b4395f2ffeb8bf2657, type: 3}
+  _inputActionAsset: {fileID: -944628639613478452, guid: 4043aa712d0f91b4395f2ffeb8bf2657, type: 3}
   _speed: 1
 --- !u!1 &1975562229
 GameObject:

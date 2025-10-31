@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using R3;
 
 namespace MyCommand
 {
@@ -17,37 +18,64 @@ namespace MyCommand
             _inputViewModel = inputViewModel;
         }
 
-        // 2軸入力を受け取るAction
         [SerializeField]
-        private InputActionProperty _moveAction;
+        private InputActionAsset _inputActionAsset;
 
-        // 移動の速さ
-        [SerializeField]
-        private float _speed = 1;
+        private InputAction _moveAction;
 
-        private void Update()
-        {
-            // 2軸入力読み込み
-            var inputValue = _moveAction.action.ReadValue<Vector2>();
-            if (inputValue != Vector2.zero)
-            {
-                _inputViewModel.UpdateMove(inputValue);
-            }
-        }
-
-        private void OnDestroy()
-        {
-            _moveAction.action.Dispose();
-        }
+        private CompositeDisposable _disposables = new CompositeDisposable();
 
         private void OnEnable()
         {
-            _moveAction.action.Enable();
+            if (_inputActionAsset == null) return;
+
+            foreach (var map in _inputActionAsset.actionMaps)
+            {
+                map.Enable();
+
+                foreach (var action in map.actions)
+                {
+                    action.performed += OnAnyActionPerformed;
+                }
+            }
+
+            _moveAction = _inputActionAsset.FindAction(InputName.Move.ToString());
+            _moveAction?.Enable();
+
+            // 毎フレーム入力値を確認
+            Observable.EveryUpdate()
+                .Select(_ => _moveAction.ReadValue<Vector2>())
+                .DistinctUntilChanged()
+                .Subscribe(v => 
+                {
+                    UpdateMoveInput(v);
+                })
+                .AddTo(_disposables);
         }
 
         private void OnDisable()
         {
-            _moveAction.action.Disable();
+            if (_inputActionAsset == null) return;
+
+            foreach (var map in _inputActionAsset.actionMaps)
+            {
+                foreach (var action in map.actions)
+                {
+                    action.performed -= OnAnyActionPerformed;
+                }
+
+                map.Disable();
+            }
+        }
+
+        private void OnAnyActionPerformed(InputAction.CallbackContext context)
+        {
+            _inputViewModel.OnAnyAction(context);
+        }
+
+        private void UpdateMoveInput(Vector2 value)
+        {
+            _inputViewModel.UpdateMove(value);
         }
     }
 }
