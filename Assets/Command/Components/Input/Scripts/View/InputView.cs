@@ -10,18 +10,13 @@ namespace MyCommand
         private InputViewModel _inputViewModel;
 
         [Inject]
-        public void Construct
-            (
-                InputViewModel inputViewModel
-            )
+        public void Construct(InputViewModel inputViewModel)
         {
             _inputViewModel = inputViewModel;
         }
 
         [SerializeField]
         private InputActionAsset _inputActionAsset;
-
-        private InputAction _moveAction;
 
         private CompositeDisposable _disposables = new CompositeDisposable();
 
@@ -35,47 +30,99 @@ namespace MyCommand
 
                 foreach (var action in map.actions)
                 {
-                    action.performed += OnAnyActionPerformed;
+                    MonitorActionEveryUpdate(action);
                 }
             }
-
-            _moveAction = _inputActionAsset.FindAction(InputName.Move.ToString());
-            _moveAction?.Enable();
-
-            // 毎フレーム入力値を確認
-            Observable.EveryUpdate()
-                .Select(_ => _moveAction.ReadValue<Vector2>())
-                .DistinctUntilChanged()
-                .Subscribe(v => 
-                {
-                    UpdateMoveInput(v);
-                })
-                .AddTo(_disposables);
         }
 
         private void OnDisable()
         {
+            _disposables.Dispose();
+
             if (_inputActionAsset == null) return;
 
             foreach (var map in _inputActionAsset.actionMaps)
             {
                 foreach (var action in map.actions)
                 {
-                    action.performed -= OnAnyActionPerformed;
-                }
+                    if (action.type == InputActionType.Button)
+                    {
+                        action.performed -= OnPress;
+                        action.canceled -= OnRelease;
+                    }
 
-                map.Disable();
+                    action.Disable();
+                }
             }
         }
 
-        private void OnAnyActionPerformed(InputAction.CallbackContext context)
+        private void MonitorActionEveryUpdate(InputAction action)
         {
-            _inputViewModel.OnAnyAction(context);
+            //Debug.Log($"InputView : action.name : {action.name}, action.expectedControlType : {action.expectedControlType}, action.type : {action.type}");
+            action.Enable();
+
+            switch (action.type)
+            {
+                case InputActionType.Value:
+                    switch (action.expectedControlType)
+                    {
+                        case "Vector2":
+                            Observable.EveryUpdate()
+                                .Select(_ => action.ReadValue<Vector2>())
+                                .DistinctUntilChanged()
+                                .Subscribe(value =>
+                                {
+                                    _inputViewModel.OnVector2Action(action.name, value);
+                                })
+                                .AddTo(_disposables);
+                            break;
+
+                        case "Float":
+                            Observable.EveryUpdate()
+                                .Select(_ => action.ReadValue<float>())
+                                .DistinctUntilChanged()
+                                .Subscribe(value =>
+                                {
+                                    _inputViewModel.OnFloatAction(action.name, value);
+                                })
+                                .AddTo(_disposables);
+                            break;
+
+                        default:
+                            //Debug.LogWarning($"InputView : Unsupported Value control type : action.name : {action.name}, action.expectedControlType : {action.expectedControlType}");
+                            break;
+                    }
+                    break;
+
+                case InputActionType.Button:
+                    action.performed += OnPress;
+                    action.canceled += OnRelease;
+                    //Debug.Log($"InputView : Button callbacks registered : action.name : {action.name}");
+                    break;
+
+                case InputActionType.PassThrough:
+                    //Debug.Log($"InputView : PassThrough action ignored : action.name : {action.name}");
+                    break;
+
+                default:
+                    //Debug.LogWarning($"InputView : Unknown action type : action.name : {action.name}, action.type : {action.type}");
+                    break;
+            }
         }
 
-        private void UpdateMoveInput(Vector2 value)
+        // 押された瞬間のコールバック
+        public void OnPress(InputAction.CallbackContext context)
         {
-            _inputViewModel.UpdateMove(value);
+            if (!context.performed) return;
+
+            _inputViewModel.OnButtonPressed(context.action.name);
+        }
+
+        // 離された瞬間のコールバック
+        public void OnRelease(InputAction.CallbackContext context)
+        {
+            if (context.performed) return;
+            _inputViewModel.OnButtonReleased(context.action.name);
         }
     }
 }

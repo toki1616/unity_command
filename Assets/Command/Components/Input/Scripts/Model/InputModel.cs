@@ -7,33 +7,29 @@ namespace MyCommand
 {
     public class InputModel
     {
-        public void UpdateMove(Vector2 value)
+        public void HandleVector2(string actionName, Vector2 value)
         {
-            Debug.Log($"InputModel : {value}");
+            Debug.Log($"InputModel : HandleVector2 : name : {actionName} : value : {value}");
         }
 
-        public void OnAnyAction(InputAction.CallbackContext context)
+        public void HandleButton(string actionName, bool isPressed)
         {
-            string actionName = context.action.name;
+            Debug.Log($"InputModel : HandleButton : name : {actionName} : value : {isPressed}");
+        }
 
-            if (Enum.TryParse<InputName>(actionName, out var inputEnum))
-            {
-                //除外するタイプ
-                HashSet<InputName> IgnoredActions = new()
-                {
-                    InputName.Move,
-                };
+        public void HandleFloat(string actionName, float value)
+        {
+            Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
+        }
 
-                //IgnoredActionsのTypeならreturn
-                if (IgnoredActions.Contains(inputEnum))
-                    return;
+        public void HandleButtonPressed(string actionName)
+        {
+            Debug.Log($"InputModel ButtonPressed : {actionName}");
+        }
 
-                Debug.Log($"InputModel : Action : {actionName}");
-            }
-            else
-            {
-                Debug.LogWarning($"未定義のアクション名: {actionName}");
-            }
+        public void HandleButtonReleased(string actionName)
+        {
+            Debug.Log($"InputModel ButtonReleased : {actionName}");
         }
     }
 }
