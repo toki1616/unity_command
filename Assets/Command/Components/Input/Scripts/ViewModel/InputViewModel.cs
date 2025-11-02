@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using R3;
 
 namespace MyCommand
 {
@@ -17,14 +18,14 @@ namespace MyCommand
             _inputModel = inputModel;
         }
 
+        public Observable<InputDirection> InputDirectionObservable => 
+            _inputModel.InputDirectionRP
+            .AsObservable()
+            .DistinctUntilChanged();
+
         public void OnVector2Action(string actionName, Vector2 value)
         {
             _inputModel.HandleVector2(actionName, value);
-        }
-
-        public void OnButtonAction(string actionName, bool isPressed)
-        {
-            _inputModel.HandleButton(actionName, isPressed);
         }
 
         public void OnFloatAction(string actionName, float value)
