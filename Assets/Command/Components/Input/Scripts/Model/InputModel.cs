@@ -2,37 +2,100 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using R3;
+using ObservableCollections;
 
 namespace MyCommand
 {
     public class InputModel
     {
-        public void UpdateMove(Vector2 value)
+        private readonly ReactiveProperty<InputDirection> _inputDirectionRP = new ReactiveProperty<InputDirection>(InputDirection.Neutral);
+        public ReadOnlyReactiveProperty<InputDirection> InputDirectionRP => _inputDirectionRP;
+
+        /// <summary>
+        /// 方向キーの入力
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <param name="value"></param>
+        public void HandleVector2(string actionName, Vector2 value)
         {
-            Debug.Log($"InputModel : {value}");
+            //Debug.Log($"InputModel : HandleVector2 : name : {actionName} : value : {value}");
+
+            _inputDirectionRP.Value = GetInputDirectionFromRawVector(value);
         }
 
-        public void OnAnyAction(InputAction.CallbackContext context)
+        /// <summary>
+        /// 入力キーの値をInputDirectionに変換
+        /// </summary>
+        /// <param name="inputDiretion"></param>
+        /// <returns></returns>
+        private InputDirection GetInputDirectionFromRawVector(Vector2 value)
         {
-            string actionName = context.action.name;
+            float x = value.x;
+            float y = value.y;
 
-            if (Enum.TryParse<InputName>(actionName, out var inputEnum))
+            // 閾値
+            float threshold = 0.4f;
+
+            bool isLeft = x < -threshold;
+            bool isRight = x > threshold;
+            bool isUp = y > threshold;
+            bool isDown = y < -threshold;
+
+            if (isUp && isRight) return InputDirection.UpperRight;
+            if (isUp && isLeft) return InputDirection.UpperLeft;
+            if (isDown && isRight) return InputDirection.LowerRight;
+            if (isDown && isLeft) return InputDirection.LowerLeft;
+            if (isUp) return InputDirection.Top;
+            if (isDown) return InputDirection.Bottom;
+            if (isLeft) return InputDirection.Left;
+            if (isRight) return InputDirection.Right;
+
+            return InputDirection.Neutral;
+        }
+
+        public void HandleFloat(string actionName, float value)
+        {
+            //Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
+        }
+
+        private readonly ObservableList<InputAttack> _pressedAttacksRC = new ObservableList<InputAttack>();
+        public IReadOnlyObservableList<InputAttack> PressedAttacksRC => _pressedAttacksRC;
+
+
+        /// <summary>
+        /// 押されたボタンの判定
+        /// </summary>
+        /// <param name="actionName"></param>
+        public void HandleButtonPressed(string actionName)
+        {
+            //Debug.Log($"InputModel ButtonPressed : {actionName}");
+
+            if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                //除外するタイプ
-                HashSet<InputName> IgnoredActions = new()
+                //Debug.Log($"一致した攻撃入力: {attack}");
+
+                if (!_pressedAttacksRC.Contains(attack))
                 {
-                    InputName.Move,
-                };
-
-                //IgnoredActionsのTypeならreturn
-                if (IgnoredActions.Contains(inputEnum))
-                    return;
-
-                Debug.Log($"InputModel : Action : {actionName}");
+                    _pressedAttacksRC.Add(attack);
+                }
             }
-            else
+        }
+
+        /// <summary>
+        /// 離れたボタンの判定
+        /// </summary>
+        /// <param name="actionName"></param>
+        public void HandleButtonReleased(string actionName)
+        {
+            //Debug.Log($"InputModel ButtonReleased : {actionName}");
+
+            if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                Debug.LogWarning($"未定義のアクション名: {actionName}");
+                if (_pressedAttacksRC.Contains(attack))
+                {
+                    _pressedAttacksRC.Remove(attack);
+                }
             }
         }
     }

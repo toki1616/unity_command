@@ -1,6 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
+using R3;
+using ObservableCollections;
 
 namespace MyCommand
 {
@@ -17,14 +18,45 @@ namespace MyCommand
             _inputModel = inputModel;
         }
 
-        public void UpdateMove(Vector2 value)
+        public Observable<InputDirection> InputDirectionObservable => 
+            _inputModel.InputDirectionRP
+            .AsObservable()
+            .DistinctUntilChanged();
+
+        public void OnVector2Action(string actionName, Vector2 value)
         {
-            _inputModel.UpdateMove(value);
+            _inputModel.HandleVector2(actionName, value);
         }
 
-        public void OnAnyAction(InputAction.CallbackContext context)
+        public void OnFloatAction(string actionName, float value)
         {
-            _inputModel.OnAnyAction(context);
+            _inputModel.HandleFloat(actionName, value);
+        }
+
+        /// <summary>
+        /// 攻撃入力の押した通知
+        /// </summary>
+        public Observable<InputAttack> PressedAttacksObservable =>
+            _inputModel.PressedAttacksRC
+                .ObserveAdd()
+                .Select(e => e.Value);
+
+        /// <summary>
+        /// 攻撃入力の離した通知
+        /// </summary>
+        public Observable<InputAttack> ReleasedAttacksObservable =>
+            _inputModel.PressedAttacksRC
+                .ObserveRemove()
+                .Select(e => e.Value);
+
+        public void OnButtonPressed(string actionName)
+        {
+            _inputModel.HandleButtonPressed(actionName);
+        }
+
+        public void OnButtonReleased(string actionName)
+        {
+            _inputModel.HandleButtonReleased(actionName);
         }
     }
 }
