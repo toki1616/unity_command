@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8317047451383216725}
   - component: {fileID: 7224252853450321520}
   m_Layer: 5
-  m_Name: DirectionPanel 1
+  m_Name: DirectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8388818603454842428}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -112,9 +112,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel
+      value: DirectionArrowPanel
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -214,9 +218,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (2)
+      value: DirectionArrowPanel (2)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -316,9 +324,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (5)
+      value: DirectionArrowPanel (5)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -418,9 +430,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (1)
+      value: DirectionArrowPanel (1)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -520,9 +536,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (4)
+      value: DirectionArrowPanel (4)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -622,9 +642,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (7)
+      value: DirectionArrowPanel (7)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -724,9 +748,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (6)
+      value: DirectionArrowPanel (6)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x
@@ -826,9 +854,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4574386837224073654}
     m_Modifications:
+    - target: {fileID: 1359975878933674055, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
+      propertyPath: _inputDirection
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4998147244397443031, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Name
-      value: DirectionPanel (3)
+      value: DirectionArrowPanel (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6386046061063871224, guid: ea534ec3b28baf24f8869afa7355c4e1, type: 3}
       propertyPath: m_Pivot.x

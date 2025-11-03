@@ -2,6 +2,21 @@ using UnityEngine;
 
 namespace MyCommand
 {
+    public static class CommandColors
+    {
+        public static Color directionActiveColor = new Color(1f, 1f, 1f);
+        public static Color directionEnactiveColor = new Color(0.8f, 0.8f, 0.8f);
+
+        public static Color weekAttackActiveColor = new Color(1f, 1f, 1f);
+        public static Color weekAttackEnactiveColor = new Color(1f, 1f, 1f);
+
+        public static Color middleAttackActiveColor = new Color(1f, 1f, 1f);
+        public static Color middleAttackEnactiveColor = new Color(1f, 1f, 1f);
+
+        public static Color strongAttackActiveColor = new Color(1f, 1f, 1f);
+        public static Color strongAttackEnactiveColor = new Color(1f, 1f, 1f);
+    }
+
     /// <summary>
     /// InputActionの名前enum
     /// </summary>
