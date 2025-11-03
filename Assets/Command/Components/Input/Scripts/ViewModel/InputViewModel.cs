@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Zenject;
 using R3;
+using ObservableCollections;
 
 namespace MyCommand
 {
@@ -32,6 +32,22 @@ namespace MyCommand
         {
             _inputModel.HandleFloat(actionName, value);
         }
+
+        /// <summary>
+        /// 攻撃入力の押した通知
+        /// </summary>
+        public Observable<InputAttack> PressedAttacksObservable =>
+            _inputModel.PressedAttacksRC
+                .ObserveAdd()
+                .Select(e => e.Value);
+
+        /// <summary>
+        /// 攻撃入力の離した通知
+        /// </summary>
+        public Observable<InputAttack> ReleasedAttacksObservable =>
+            _inputModel.PressedAttacksRC
+                .ObserveRemove()
+                .Select(e => e.Value);
 
         public void OnButtonPressed(string actionName)
         {

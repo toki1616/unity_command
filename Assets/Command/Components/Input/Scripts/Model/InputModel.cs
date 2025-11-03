@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using R3;
+using ObservableCollections;
 
 namespace MyCommand
 {
@@ -55,8 +56,12 @@ namespace MyCommand
 
         public void HandleFloat(string actionName, float value)
         {
-            Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
+            //Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
         }
+
+        private readonly ObservableList<InputAttack> _pressedAttacksRC = new ObservableList<InputAttack>();
+        public IReadOnlyObservableList<InputAttack> PressedAttacksRC => _pressedAttacksRC;
+
 
         /// <summary>
         /// 押されたボタンの判定
@@ -64,7 +69,17 @@ namespace MyCommand
         /// <param name="actionName"></param>
         public void HandleButtonPressed(string actionName)
         {
-            Debug.Log($"InputModel ButtonPressed : {actionName}");
+            //Debug.Log($"InputModel ButtonPressed : {actionName}");
+
+            if (Enum.TryParse<InputAttack>(actionName, out var attack))
+            {
+                //Debug.Log($"一致した攻撃入力: {attack}");
+
+                if (!_pressedAttacksRC.Contains(attack))
+                {
+                    _pressedAttacksRC.Add(attack);
+                }
+            }
         }
 
         /// <summary>
@@ -73,7 +88,15 @@ namespace MyCommand
         /// <param name="actionName"></param>
         public void HandleButtonReleased(string actionName)
         {
-            Debug.Log($"InputModel ButtonReleased : {actionName}");
+            //Debug.Log($"InputModel ButtonReleased : {actionName}");
+
+            if (Enum.TryParse<InputAttack>(actionName, out var attack))
+            {
+                if (_pressedAttacksRC.Contains(attack))
+                {
+                    _pressedAttacksRC.Remove(attack);
+                }
+            }
         }
     }
 }
