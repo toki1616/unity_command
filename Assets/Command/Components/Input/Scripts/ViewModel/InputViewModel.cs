@@ -2,6 +2,7 @@ using UnityEngine;
 using Zenject;
 using R3;
 using ObservableCollections;
+using System.Collections.Generic;
 
 namespace MyCommand
 {
@@ -58,5 +59,9 @@ namespace MyCommand
         {
             _inputModel.HandleButtonReleased(actionName);
         }
+
+        public Observable<List<InputFrameData>> InputFrameHistoryListAsObservable =>
+            _inputModel.InputFrameHistoryObservable
+            .Publish();
     }
 }
