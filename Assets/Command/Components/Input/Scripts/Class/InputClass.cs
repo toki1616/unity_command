@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputFrameData
     {

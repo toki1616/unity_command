@@ -4,7 +4,7 @@ using R3;
 using ObservableCollections;
 using System.Collections.Generic;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputViewModel
     {

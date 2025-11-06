@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputInstaller : Installer<InputInstaller>
     {

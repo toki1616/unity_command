@@ -4,7 +4,7 @@ using Zenject;
 using R3;
 using ObservableCollections;
 
-namespace MyCommand{
+namespace My.Command{
     public class InputAttackButtonPanel : MonoBehaviour
     {
         private InputViewModel _inputViewModel;

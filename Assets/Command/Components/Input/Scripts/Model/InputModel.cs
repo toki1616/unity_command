@@ -4,7 +4,7 @@ using UnityEngine;
 using R3;
 using ObservableCollections;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputModel
     {
