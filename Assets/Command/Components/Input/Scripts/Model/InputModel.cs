@@ -106,7 +106,7 @@ namespace My.Command
             }
         }
 
-        private Subject<List<InputFrameData>> _inputFrameHistorySubject;
+        private Subject<List<InputFrameData>> _inputFrameHistorySubject = new Subject<List<InputFrameData>>();
         /// <summary>
         /// 毎フレームの入力通知
         /// </summary>
