@@ -66,8 +66,8 @@ namespace My.Command
             //Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
         }
 
-        private readonly ObservableList<InputAttack> _pressedAttacksRC = new ObservableList<InputAttack>();
-        public IReadOnlyObservableList<InputAttack> PressedAttacksRC => _pressedAttacksRC;
+        private readonly ObservableList<InputAttack> _pressedAttacksObservableList = new ObservableList<InputAttack>();
+        public IReadOnlyObservableList<InputAttack> PressedAttacksObservableList => _pressedAttacksObservableList;
 
 
         /// <summary>
@@ -82,9 +82,9 @@ namespace My.Command
             {
                 //Debug.Log($"一致した攻撃入力: {attack}");
 
-                if (!_pressedAttacksRC.Contains(attack))
+                if (!_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksRC.Add(attack);
+                    _pressedAttacksObservableList.Add(attack);
                 }
             }
         }
@@ -99,9 +99,9 @@ namespace My.Command
 
             if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                if (_pressedAttacksRC.Contains(attack))
+                if (_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksRC.Remove(attack);
+                    _pressedAttacksObservableList.Remove(attack);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace My.Command
         public void UpdatePerFrame()
         {
             var currentDirection = _inputDirectionRP.Value;
-            var currentAttacks = new List<InputAttack>(_pressedAttacksRC);
+            var currentAttacks = new List<InputAttack>(_pressedAttacksObservableList);
 
             var lastFrame = _inputFrameHistory.Count > 0
                 ? _inputFrameHistory[_inputFrameHistory.Count - 1]
