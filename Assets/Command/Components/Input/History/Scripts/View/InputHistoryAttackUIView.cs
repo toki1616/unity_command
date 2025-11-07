@@ -24,5 +24,10 @@ namespace My.Command
 
             attackImage.color = _inputAttack.GetColor(true);
         }
+
+        public void SetInputFrameData(InputFrameData inputFrameData)
+        {
+            gameObject.SetActive(inputFrameData.Attacks.Contains(_inputAttack));
+        }
     }
 }

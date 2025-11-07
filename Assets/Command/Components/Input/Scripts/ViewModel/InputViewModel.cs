@@ -64,5 +64,11 @@ namespace My.Command
         public Observable<List<InputFrameData>> InputFrameHistoryListAsObservable =>
             _inputModel.InputFrameHistoryObservable
             .Publish();
+
+        public Observable<InputFrameData> InputFrameHistoryAsObservable =>
+            _inputModel.InputFrameHistoryObservable
+            .Select(list => list.Last())
+            .Publish()
+            .RefCount();
     }
 }

@@ -41,5 +41,10 @@ namespace My.Command
 
             return true;
         }
+
+        public string GetFrameString()
+        {
+            return holdFrame.ToString();
+        }
     }
 }
