@@ -1,14 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using R3;
 using ObservableCollections;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputModel
     {
+        public InputModel()
+        {
+            _subscription = Observable.EveryUpdate()
+                .Subscribe(_ => UpdatePerFrame());
+        }
+
+        private IDisposable _subscription;
+
         private readonly ReactiveProperty<InputDirection> _inputDirectionRP = new ReactiveProperty<InputDirection>(InputDirection.Neutral);
         public ReadOnlyReactiveProperty<InputDirection> InputDirectionRP => _inputDirectionRP;
 
@@ -59,8 +66,8 @@ namespace MyCommand
             //Debug.Log($"InputModel : HandleFloat : name : {actionName} : value : {value}");
         }
 
-        private readonly ObservableList<InputAttack> _pressedAttacksRC = new ObservableList<InputAttack>();
-        public IReadOnlyObservableList<InputAttack> PressedAttacksRC => _pressedAttacksRC;
+        private readonly ObservableList<InputAttack> _pressedAttacksObservableList = new ObservableList<InputAttack>();
+        public IReadOnlyObservableList<InputAttack> PressedAttacksObservableList => _pressedAttacksObservableList;
 
 
         /// <summary>
@@ -75,9 +82,9 @@ namespace MyCommand
             {
                 //Debug.Log($"一致した攻撃入力: {attack}");
 
-                if (!_pressedAttacksRC.Contains(attack))
+                if (!_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksRC.Add(attack);
+                    _pressedAttacksObservableList.Add(attack);
                 }
             }
         }
@@ -92,10 +99,61 @@ namespace MyCommand
 
             if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                if (_pressedAttacksRC.Contains(attack))
+                if (_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksRC.Remove(attack);
+                    _pressedAttacksObservableList.Remove(attack);
                 }
+            }
+        }
+
+        private Subject<List<InputFrameData>> _inputFrameHistorySubject = new Subject<List<InputFrameData>>();
+        /// <summary>
+        /// 毎フレームの入力通知
+        /// </summary>
+        public Observable<List<InputFrameData>> InputFrameHistoryObservable => _inputFrameHistorySubject;
+
+        private readonly List<InputFrameData> _inputFrameHistory = new List<InputFrameData>();
+
+        /// <summary>
+        /// 毎フレーム入力保持の処理
+        /// </summary>
+        public void UpdatePerFrame()
+        {
+            var currentDirection = _inputDirectionRP.Value;
+            var currentAttacks = new List<InputAttack>(_pressedAttacksObservableList);
+
+            var lastFrame = _inputFrameHistory.Count > 0
+                ? _inputFrameHistory[_inputFrameHistory.Count - 1]
+                : null;
+
+            var currentFrame = new InputFrameData(currentDirection, currentAttacks, Time.time);
+
+            if (lastFrame != null && lastFrame.IsSameAs(currentFrame))
+            {
+                lastFrame.AddHold();
+                // 通知を飛ばす（内容が変わったことを知らせる）
+                _inputFrameHistorySubject.OnNext(new List<InputFrameData>(_inputFrameHistory));
+            }
+            else
+            {
+                _inputFrameHistory.Add(currentFrame);
+
+                if (_inputFrameHistory.Count > 30)
+                {
+                    _inputFrameHistory.RemoveAt(0);
+                }
+
+                // 通知を飛ばす（新しい履歴が追加された）
+                _inputFrameHistorySubject.OnNext(new List<InputFrameData>(_inputFrameHistory));
+            }
+
+            if (_inputFrameHistory.Count > 0)
+            {
+                Debug.Log($"UpdatePerFrame : {_inputFrameHistory[_inputFrameHistory.Count - 1].ToString()}");
+            }
+            else
+            {
+                Debug.Log("UpdatePerFrame : 入力履歴がまだありません");
             }
         }
     }

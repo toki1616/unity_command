@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Zenject;
 using R3;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputDirectionView : MonoBehaviour
     {

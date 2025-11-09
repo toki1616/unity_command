@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using Zenject;
 using R3;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputView : MonoBehaviour
     {

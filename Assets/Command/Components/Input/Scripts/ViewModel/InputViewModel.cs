@@ -2,8 +2,10 @@ using UnityEngine;
 using Zenject;
 using R3;
 using ObservableCollections;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace MyCommand
+namespace My.Command
 {
     public class InputViewModel
     {
@@ -37,7 +39,7 @@ namespace MyCommand
         /// 攻撃入力の押した通知
         /// </summary>
         public Observable<InputAttack> PressedAttacksObservable =>
-            _inputModel.PressedAttacksRC
+            _inputModel.PressedAttacksObservableList
                 .ObserveAdd()
                 .Select(e => e.Value);
 
@@ -45,7 +47,7 @@ namespace MyCommand
         /// 攻撃入力の離した通知
         /// </summary>
         public Observable<InputAttack> ReleasedAttacksObservable =>
-            _inputModel.PressedAttacksRC
+            _inputModel.PressedAttacksObservableList
                 .ObserveRemove()
                 .Select(e => e.Value);
 
@@ -58,5 +60,15 @@ namespace MyCommand
         {
             _inputModel.HandleButtonReleased(actionName);
         }
+
+        public Observable<List<InputFrameData>> InputFrameHistoryListAsObservable =>
+            _inputModel.InputFrameHistoryObservable
+            .Publish();
+
+        public Observable<InputFrameData> InputFrameHistoryAsObservable =>
+            _inputModel.InputFrameHistoryObservable
+            .Select(list => list.Last())
+            .Publish()
+            .RefCount();
     }
 }

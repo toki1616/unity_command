@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MyCommand
+namespace My.Command
 {
     public static class InputExtension
     {
