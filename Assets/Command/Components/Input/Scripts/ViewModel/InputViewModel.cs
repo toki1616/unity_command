@@ -63,7 +63,7 @@ namespace My.Command
 
         public Observable<List<InputFrameData>> InputFrameHistoryListAsObservable =>
             _inputModel.InputFrameHistoryObservable
-            .Publish();
+            .Share();
 
         public Observable<InputFrameData> InputFrameHistoryAsObservable =>
             _inputModel.InputFrameHistoryObservable
