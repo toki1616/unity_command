@@ -10,6 +10,7 @@ namespace My.Command
         {
             new CommandPattern(
                 "hadou_p",
+                11f,
                 new List<InputDirection>
                 {
                     InputDirection.Bottom,
@@ -22,6 +23,7 @@ namespace My.Command
             // パンチが2つ以上でOK
             new CommandPattern(
                 "hadou_p_OD_strong",
+                11f,
                 new List<InputDirection>
                 {
                     InputDirection.Bottom,
@@ -45,33 +47,51 @@ namespace My.Command
         {
             foreach (var pattern in _commandPatterns)
             {
-                if (EndsWith(inputHistory, pattern.Directions))
-                {
-                    // 攻撃履歴をまとめる
-                    var allAttacks = inputHistory.SelectMany(h => h.Attacks).ToList();
+                int matchStartIndex = GetPatternStartIndex(inputHistory, pattern.Directions);
 
-                    if (pattern.AttackCondition(allAttacks))
+                if (matchStartIndex >= 0)
+                {
+                    // パターンに一致する方向入力 + それ以降の攻撃入力を含めた範囲を取得
+                    var remainingHistory = inputHistory.Skip(matchStartIndex).ToList();
+
+                    float totalHoldFrame = 0f;
+                    var attackRange = new List<InputAttack>();
+
+                    foreach (var frame in remainingHistory)
                     {
-                        Debug.Log($"コマンド成立！ : {pattern.Name}");
+                        totalHoldFrame += frame.holdFrame;
+                        attackRange.AddRange(frame.Attacks);
+
+                        // 攻撃条件を満たした時点で判定
+                        if (pattern.AttackCondition(attackRange))
+                        {
+                            if (totalHoldFrame <= pattern.GraceFrame)
+                            {
+                                Debug.Log($"コマンド成立！ : {pattern.Name}");
+                            }
+                            break; // 攻撃条件を満たしたらそれ以上は不要
+                        }
                     }
                 }
             }
         }
 
         /// <summary>
-        /// 入力した方向の履歴の末尾がパターンと一致しているか判定
+        /// 入力履歴の末尾がパターンと一致しているか判定し、開始インデックスを返す（なければ -1）
         /// </summary>
-        private bool EndsWith(List<InputFrameData> inputHistory, List<InputDirection> pattern)
+        private int GetPatternStartIndex(List<InputFrameData> inputHistory, List<InputDirection> pattern)
         {
-            if (inputHistory.Count < pattern.Count) return false;
+            if (inputHistory.Count < pattern.Count) return -1;
+
+            int startIndex = inputHistory.Count - pattern.Count;
 
             for (int i = 0; i < pattern.Count; i++)
             {
-                // InputFrameData の Direction を比較
-                if (inputHistory[inputHistory.Count - pattern.Count + i].Direction != pattern[i])
-                    return false;
+                if (inputHistory[startIndex + i].Direction != pattern[i])
+                    return -1;
             }
-            return true;
+
+            return startIndex;
         }
     }
 }
