@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using R3;
 using ObservableCollections;
@@ -69,6 +70,7 @@ namespace My.Command
         private readonly ObservableList<InputAttack> _pressedAttacksObservableList = new ObservableList<InputAttack>();
         public IReadOnlyObservableList<InputAttack> PressedAttacksObservableList => _pressedAttacksObservableList;
 
+        private readonly List<InputAttack> _justPressedAttacks = new List<InputAttack>();
 
         /// <summary>
         /// 押されたボタンの判定
@@ -76,16 +78,17 @@ namespace My.Command
         /// <param name="actionName"></param>
         public void HandleButtonPressed(string actionName)
         {
-            //Debug.Log($"InputModel ButtonPressed : {actionName}");
-
             if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                //Debug.Log($"一致した攻撃入力: {attack}");
-
-                if (!_pressedAttacksObservableList.Contains(attack))
+                // すでに押されているならスキップ
+                if (_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksObservableList.Add(attack);
+                    return;
                 }
+
+                // 初めて押された場合のみ追加
+                _pressedAttacksObservableList.Add(attack);
+                _justPressedAttacks.Add(attack);
             }
         }
 
@@ -126,7 +129,11 @@ namespace My.Command
                 ? _inputFrameHistory[_inputFrameHistory.Count - 1]
                 : null;
 
-            var currentFrame = new InputFrameData(currentDirection, currentAttacks, Time.time);
+            // このフレームで新しく押された攻撃を取得
+            var newlyPressed = _justPressedAttacks.ToList();
+            _justPressedAttacks.Clear();
+
+            var currentFrame = new InputFrameData(currentDirection, currentAttacks, newlyPressed);
 
             if (lastFrame != null && lastFrame.IsSameAs(currentFrame))
             {
