@@ -23,7 +23,7 @@ namespace My.Command
 
         public void SetInputFrameData(InputFrameData inputFrameData)
         {
-            Debug.Log($"{inputFrameData.ToString()}");
+            //Debug.Log($"{inputFrameData.ToString()}");
             _frameText.text = inputFrameData.GetFrameString();
 
             foreach (var attackUIView in _attackUIViewList)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using R3;
 using ObservableCollections;
@@ -69,6 +70,7 @@ namespace My.Command
         private readonly ObservableList<InputAttack> _pressedAttacksObservableList = new ObservableList<InputAttack>();
         public IReadOnlyObservableList<InputAttack> PressedAttacksObservableList => _pressedAttacksObservableList;
 
+        private readonly List<InputAttack> _justPressedAttacks = new List<InputAttack>();
 
         /// <summary>
         /// 押されたボタンの判定
@@ -76,16 +78,17 @@ namespace My.Command
         /// <param name="actionName"></param>
         public void HandleButtonPressed(string actionName)
         {
-            //Debug.Log($"InputModel ButtonPressed : {actionName}");
-
             if (Enum.TryParse<InputAttack>(actionName, out var attack))
             {
-                //Debug.Log($"一致した攻撃入力: {attack}");
-
-                if (!_pressedAttacksObservableList.Contains(attack))
+                // すでに押されているならスキップ
+                if (_pressedAttacksObservableList.Contains(attack))
                 {
-                    _pressedAttacksObservableList.Add(attack);
+                    return;
                 }
+
+                // 初めて押された場合のみ追加
+                _pressedAttacksObservableList.Add(attack);
+                _justPressedAttacks.Add(attack);
             }
         }
 
@@ -126,35 +129,67 @@ namespace My.Command
                 ? _inputFrameHistory[_inputFrameHistory.Count - 1]
                 : null;
 
-            var currentFrame = new InputFrameData(currentDirection, currentAttacks, Time.time);
+            // このフレームで新しく押された攻撃を取得
+            var newlyPressed = _justPressedAttacks.ToList();
+            _justPressedAttacks.Clear();
+
+            var currentFrame = new InputFrameData(currentDirection, currentAttacks, newlyPressed);
 
             if (lastFrame != null && lastFrame.IsSameAs(currentFrame))
             {
                 lastFrame.AddHold();
-                // 通知を飛ばす（内容が変わったことを知らせる）
-                _inputFrameHistorySubject.OnNext(new List<InputFrameData>(_inputFrameHistory));
             }
             else
             {
                 _inputFrameHistory.Add(currentFrame);
+            }
 
-                if (_inputFrameHistory.Count > 30)
+            // フレーム数ベースで履歴を制限
+            var limitedHistory = GetLimitInputHistory(_inputFrameHistory);
+            _inputFrameHistory.Clear();
+            _inputFrameHistory.AddRange(limitedHistory);
+
+            // 通知を飛ばす（履歴が更新された）
+            _inputFrameHistorySubject.OnNext(new List<InputFrameData>(_inputFrameHistory));
+
+            //Debug.Log($"UpdatePerFrame : {_inputFrameHistory.LastOrDefault()?.ToString() ?? "履歴なし"}");
+        }
+
+        /// <summary>
+        /// 最新の入力から30フレームまでの履歴を取得
+        /// </summary>
+        /// <param name="inputHistory"></param>
+        /// <returns></returns>
+        private List<InputFrameData> GetLimitInputHistory(List<InputFrameData> inputHistory)
+        {
+            float limitFrame = 30f;
+            float accumulatedFrame = 0f;
+            var reversedLimitedHistory = new List<InputFrameData>();
+
+            // 後ろから前に向かって処理（新しい順）
+            for (int i = inputHistory.Count - 1; i >= 0; i--)
+            {
+                var inputFrameData = inputHistory[i];
+                float nextTotal = accumulatedFrame + inputFrameData.holdFrame;
+
+                if (nextTotal <= limitFrame)
                 {
-                    _inputFrameHistory.RemoveAt(0);
+                    reversedLimitedHistory.Add(inputFrameData);
+                    accumulatedFrame = nextTotal;
                 }
-
-                // 通知を飛ばす（新しい履歴が追加された）
-                _inputFrameHistorySubject.OnNext(new List<InputFrameData>(_inputFrameHistory));
+                else
+                {
+                    if (reversedLimitedHistory.Count == 0 || accumulatedFrame < limitFrame)
+                    {
+                        reversedLimitedHistory.Add(inputFrameData);
+                    }
+                    break;
+                }
             }
 
-            if (_inputFrameHistory.Count > 0)
-            {
-                Debug.Log($"UpdatePerFrame : {_inputFrameHistory[_inputFrameHistory.Count - 1].ToString()}");
-            }
-            else
-            {
-                Debug.Log("UpdatePerFrame : 入力履歴がまだありません");
-            }
+            // 時系列順に戻す（古い順に）
+            reversedLimitedHistory.Reverse();
+            return reversedLimitedHistory;
         }
     }
 }

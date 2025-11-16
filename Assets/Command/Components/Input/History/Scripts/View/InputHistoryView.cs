@@ -59,6 +59,13 @@ namespace My.Command
             inputHistoryItemListView.SetInputFrameData(inputFrameData);
 
             historyItemList.Add(inputHistoryItemListView);
+
+            int maxItems = 30; // 表示上限
+            if (historyItemList.Count > maxItems)
+            {
+                Destroy(historyItemList[0].gameObject);
+                historyItemList.RemoveAt(0);
+            }
         }
     }
 }
