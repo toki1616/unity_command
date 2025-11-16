@@ -10,28 +10,14 @@ namespace My.Command
         {
             new CommandPattern(
                 "hadou_p",
-                11f,
+                CommandConst.hadouGraceFrame,
                 new List<InputDirection>
                 {
                     InputDirection.Bottom,
                     InputDirection.LowerRight,
                     InputDirection.Right
-                },
-                attacks => attacks.Count(atk => atk.ToString().Contains("Punchi")) == 1
+                }
             ),
-
-            // パンチが2つ以上でOK
-            new CommandPattern(
-                "hadou_p_OD_strong",
-                11f,
-                new List<InputDirection>
-                {
-                    InputDirection.Bottom,
-                    InputDirection.LowerRight,
-                    InputDirection.Right
-                },
-                attacks => attacks.Count(atk => atk.ToString().Contains("Punchi")) >= 2
-            )
         };
 
 
@@ -45,53 +31,32 @@ namespace My.Command
         /// </summary>
         private void CheckCommands(List<InputFrameData> inputHistory)
         {
+            if (inputHistory.Last().NewlyPressedAttacks.Count <= 0) return;
+
             foreach (var pattern in _commandPatterns)
             {
-                int matchStartIndex = GetPatternStartIndex(inputHistory, pattern.Directions);
+                if (!pattern.IsMatch(inputHistory)) continue;
 
-                if (matchStartIndex >= 0)
-                {
-                    // パターンに一致する方向入力 + それ以降の攻撃入力を含めた範囲を取得
-                    var remainingHistory = inputHistory.Skip(matchStartIndex).ToList();
-
-                    float totalHoldFrame = 0f;
-                    var attackRange = new List<InputAttack>();
-
-                    foreach (var frame in remainingHistory)
-                    {
-                        totalHoldFrame += frame.holdFrame;
-                        attackRange.AddRange(frame.Attacks);
-
-                        // 攻撃条件を満たした時点で判定
-                        if (pattern.AttackCondition(attackRange))
-                        {
-                            if (totalHoldFrame <= pattern.GraceFrame)
-                            {
-                                Debug.Log($"コマンド成立！ : {pattern.Name}");
-                            }
-                            break; // 攻撃条件を満たしたらそれ以上は不要
-                        }
-                    }
-                }
+                Debug.Log($"コマンド成立！ : {pattern.Name}");
             }
         }
 
         /// <summary>
-        /// 入力履歴の末尾がパターンと一致しているか判定し、開始インデックスを返す（なければ -1）
+        /// 入力履歴の末尾がパターンと一致しているか判定
         /// </summary>
-        private int GetPatternStartIndex(List<InputFrameData> inputHistory, List<InputDirection> pattern)
+        private bool GetPatternStartIndex(List<InputFrameData> inputHistory, List<InputDirection> pattern)
         {
-            if (inputHistory.Count < pattern.Count) return -1;
+            if (inputHistory.Count < pattern.Count) return false;
 
             int startIndex = inputHistory.Count - pattern.Count;
 
             for (int i = 0; i < pattern.Count; i++)
             {
                 if (inputHistory[startIndex + i].Direction != pattern[i])
-                    return -1;
+                    return false;
             }
 
-            return startIndex;
+            return true;
         }
     }
 }
