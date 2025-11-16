@@ -47,7 +47,7 @@ namespace My.Command
                 accumulatedFrame += inputHistory[i].holdFrame;
                 graceList.Insert(0, inputHistory[i]); // 古い順に並べる
 
-                Debug.Log($"GetGraceFrameHistory : accumulatedFrame : {accumulatedFrame} : {inputHistory[i]}");
+                //Debug.Log($"GetGraceFrameHistory : accumulatedFrame : {accumulatedFrame} : {inputHistory[i]}");
 
                 if (accumulatedFrame > graceFrame)
                     break;
@@ -64,15 +64,23 @@ namespace My.Command
         {
             if (inputHistory.Count < Directions.Count) return false;
 
-            int startIndex = inputHistory.Count - Directions.Count;
-
-            for (int i = 0; i < Directions.Count; i++)
+            // graceList の中にパターンが含まれていればOK
+            for (int startIndex = 0; startIndex <= inputHistory.Count - Directions.Count; startIndex++)
             {
-                if (inputHistory[startIndex + i].Direction != Directions[i])
-                    return false;
+                bool match = true;
+                for (int i = 0; i < Directions.Count; i++)
+                {
+                    if (inputHistory[startIndex + i].Direction != Directions[i])
+                    {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
             }
 
-            return true;
+            return false;
         }
+
     }
 }
