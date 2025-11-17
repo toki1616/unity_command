@@ -59,18 +59,24 @@ namespace My.Command
 
         /// <summary>
         /// 入力履歴の末尾がパターンと一致しているか判定
+        /// Neutral は無視して判定
         /// </summary>
         private bool CheckDirectionPattern(List<InputFrameData> inputHistory)
         {
-            if (inputHistory.Count < Directions.Count) return false;
+            // Neutral を除いた履歴を作成
+            var filteredHistory = inputHistory
+                .Where(f => f.Direction != InputDirection.Neutral)
+                .ToList();
 
-            // graceList の中にパターンが含まれていればOK
-            for (int startIndex = 0; startIndex <= inputHistory.Count - Directions.Count; startIndex++)
+            if (filteredHistory.Count < Directions.Count) return false;
+
+            // filteredHistory の中にパターンが含まれていればOK
+            for (int startIndex = 0; startIndex <= filteredHistory.Count - Directions.Count; startIndex++)
             {
                 bool match = true;
                 for (int i = 0; i < Directions.Count; i++)
                 {
-                    if (inputHistory[startIndex + i].Direction != Directions[i])
+                    if (filteredHistory[startIndex + i].Direction != Directions[i])
                     {
                         match = false;
                         break;
@@ -81,6 +87,5 @@ namespace My.Command
 
             return false;
         }
-
     }
 }
