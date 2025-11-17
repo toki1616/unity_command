@@ -9,13 +9,33 @@ namespace My.Command
         private List<CommandPattern> _commandPatterns = new List<CommandPattern>
         {
             new CommandPattern(
-                "hadou_p",
+                "syoryu",
+                CommandConst.syoryuGraceFrame,
+                new List<InputDirection>
+                {
+                    InputDirection.Right,
+                    InputDirection.Bottom,
+                    InputDirection.LowerRight
+                }
+            ),
+            new CommandPattern(
+                "hadou",
                 CommandConst.hadouGraceFrame,
                 new List<InputDirection>
                 {
                     InputDirection.Bottom,
                     InputDirection.LowerRight,
                     InputDirection.Right
+                }
+            ),
+            new CommandPattern(
+                "tatsumaki",
+                CommandConst.tatsumakiGraceFrame,
+                new List<InputDirection>
+                {
+                    InputDirection.Bottom,
+                    InputDirection.LowerLeft,
+                    InputDirection.Left
                 }
             ),
         };
