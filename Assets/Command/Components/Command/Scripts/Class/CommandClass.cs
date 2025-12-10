@@ -7,70 +7,62 @@ namespace My.Command
 {
     public class CommandPattern
     {
-        public string Name;
-        //猶予フレーム
-        public float GraceFrame;
-        public List<InputDirection> Directions;
+        public string Name { get; private set; }
 
-        public CommandPattern(string name, float graceFrame, List<InputDirection> directions)
+        /// <summary>
+        /// 猶予フレーム
+        /// </summary>
+        public float GraceFrame { get; private set; }
+
+        /// <summary>
+        /// コマンドの入力方向
+        /// </summary>
+        public List<InputDirection> Directions { get; private set; }
+
+        /// <summary>
+        /// 優先度（数値が大きいほど優先）
+        /// </summary>
+        public int Priority { get; private set; }
+
+        public CommandPattern(string name, float graceFrame, List<InputDirection> directions, int priority)
         {
             Name = name;
             GraceFrame = graceFrame;
             Directions = directions;
+            Priority = priority;
         }
 
-        /// <summary>
-        /// 入力履歴に一致しているか判定
-        /// </summary>
         public bool IsMatch(List<InputFrameData> inputHistory)
         {
             if (inputHistory.Count < Directions.Count) return false;
-
-            // GraceFrame分だけ遡った履歴を抽出
             var graceList = GetGraceFrameHistory(inputHistory, GraceFrame);
-
-            // その範囲の中でコマンドが成立していたらtrue
             return CheckDirectionPattern(graceList);
         }
 
-        /// <summary>
-        /// GraceFrame分だけ過去に遡った履歴を返す
-        /// </summary>
         private List<InputFrameData> GetGraceFrameHistory(List<InputFrameData> inputHistory, float graceFrame)
         {
             float accumulatedFrame = 0f;
             var graceList = new List<InputFrameData>();
 
-            // 最新から過去へ遡る
             for (int i = inputHistory.Count - 1; i >= 0; i--)
             {
                 accumulatedFrame += inputHistory[i].holdFrame;
-                graceList.Insert(0, inputHistory[i]); // 古い順に並べる
-
-                //Debug.Log($"GetGraceFrameHistory : accumulatedFrame : {accumulatedFrame} : {inputHistory[i]}");
+                graceList.Insert(0, inputHistory[i]);
 
                 if (accumulatedFrame > graceFrame)
                     break;
             }
-
             return graceList;
         }
 
-
-        /// <summary>
-        /// 入力履歴の末尾がパターンと一致しているか判定
-        /// Neutral は無視して判定
-        /// </summary>
         private bool CheckDirectionPattern(List<InputFrameData> inputHistory)
         {
-            // Neutral を除いた履歴を作成
             var filteredHistory = inputHistory
                 .Where(f => f.Direction != InputDirection.Neutral)
                 .ToList();
 
             if (filteredHistory.Count < Directions.Count) return false;
 
-            // filteredHistory の中にパターンが含まれていればOK
             for (int startIndex = 0; startIndex <= filteredHistory.Count - Directions.Count; startIndex++)
             {
                 bool match = true;
@@ -84,7 +76,6 @@ namespace My.Command
                 }
                 if (match) return true;
             }
-
             return false;
         }
     }
