@@ -18,20 +18,6 @@ namespace My.Command
     }
 
     /// <summary>
-    /// InputActionの名前enum
-    /// </summary>
-    public enum InputName
-    {
-        Move,
-        Punchi_week,
-        Punchi_middle,
-        Punchi_strong,
-        Kick_week,
-        Kick_middle,
-        Kick_strong,
-    }
-
-    /// <summary>
     /// 方向入力のenum
     /// </summary>
     public enum InputDirection
@@ -53,11 +39,11 @@ namespace My.Command
     public enum InputAttack
     {
         Neutral,
-        Punchi_week,
-        Punchi_middle,
-        Punchi_strong,
-        Kick_week,
-        Kick_middle,
-        Kick_strong,
+        Punch_Weak,
+        Punch_Middle,
+        Punch_Strong,
+        Kick_Weak,
+        Kick_Middle,
+        Kick_Strong,
     }
 }

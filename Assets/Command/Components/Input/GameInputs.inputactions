@@ -16,7 +16,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Punchi_week",
+                    "name": "Punch_Weak",
                     "type": "Button",
                     "id": "d83ac580-6317-47f2-bd87-170d5c775010",
                     "expectedControlType": "",
@@ -25,7 +25,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Punchi_middle",
+                    "name": "Punch_Middle",
                     "type": "Button",
                     "id": "facaf57a-aa78-4615-90cb-7bef960a5662",
                     "expectedControlType": "",
@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Punchi_strong",
+                    "name": "Punch_Strong",
                     "type": "Button",
                     "id": "bd89a8cc-5e5a-490d-9479-cec43bc40576",
                     "expectedControlType": "",
@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Kick_week",
+                    "name": "Kick_Weak",
                     "type": "Button",
                     "id": "d7d466a8-0eae-4c65-8023-afde5a330973",
                     "expectedControlType": "",
@@ -52,7 +52,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Kick_middle",
+                    "name": "Kick_Middle",
                     "type": "Button",
                     "id": "af17d97a-bf82-44c9-9923-1049d7abdf9b",
                     "expectedControlType": "",
@@ -61,7 +61,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Kick_strong",
+                    "name": "Kick_Strong",
                     "type": "Button",
                     "id": "e43f2633-b220-4cf3-8833-4a31296ddd04",
                     "expectedControlType": "",
@@ -188,7 +188,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_week",
+                    "action": "Punch_Weak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -199,7 +199,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_week",
+                    "action": "Punch_Weak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -210,7 +210,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_middle",
+                    "action": "Punch_Middle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -221,7 +221,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_middle",
+                    "action": "Punch_Middle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -232,7 +232,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_strong",
+                    "action": "Punch_Strong",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -243,7 +243,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Punchi_strong",
+                    "action": "Punch_Strong",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -254,7 +254,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_week",
+                    "action": "Kick_Weak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -265,7 +265,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_week",
+                    "action": "Kick_Weak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -276,7 +276,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_middle",
+                    "action": "Kick_Middle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -287,7 +287,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_middle",
+                    "action": "Kick_Middle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -298,7 +298,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_strong",
+                    "action": "Kick_Strong",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -309,7 +309,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick_strong",
+                    "action": "Kick_Strong",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

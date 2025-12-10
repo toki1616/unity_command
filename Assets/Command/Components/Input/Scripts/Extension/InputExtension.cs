@@ -14,13 +14,13 @@ namespace My.Command
         {
             return attack switch
             {
-                InputAttack.Punchi_week or InputAttack.Kick_week =>
+                InputAttack.Punch_Weak or InputAttack.Kick_Weak =>
                     isActive ? CommandColors.weekAttackActiveColor : CommandColors.weekAttackEnactiveColor,
 
-                InputAttack.Punchi_middle or InputAttack.Kick_middle =>
+                InputAttack.Punch_Middle or InputAttack.Kick_Middle =>
                     isActive ? CommandColors.middleAttackActiveColor : CommandColors.middleAttackEnactiveColor,
 
-                InputAttack.Punchi_strong or InputAttack.Kick_strong =>
+                InputAttack.Punch_Strong or InputAttack.Kick_Strong =>
                     isActive ? CommandColors.strongAttackActiveColor : CommandColors.strongAttackEnactiveColor,
 
                 _ => isActive ? CommandColors.directionActiveColor : CommandColors.directionEnactiveColor

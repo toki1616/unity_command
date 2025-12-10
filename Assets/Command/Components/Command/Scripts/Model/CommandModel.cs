@@ -11,32 +11,20 @@ namespace My.Command
             new CommandPattern(
                 "syoryu",
                 CommandConst.syoryuGraceFrame,
-                new List<InputDirection>
-                {
-                    InputDirection.Right,
-                    InputDirection.Bottom,
-                    InputDirection.LowerRight
-                }
+                new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
+                priority: 1 // 昇竜拳を最優先
             ),
             new CommandPattern(
                 "hadou",
                 CommandConst.hadouGraceFrame,
-                new List<InputDirection>
-                {
-                    InputDirection.Bottom,
-                    InputDirection.LowerRight,
-                    InputDirection.Right
-                }
+                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                priority: 2
             ),
             new CommandPattern(
                 "tatsumaki",
                 CommandConst.tatsumakiGraceFrame,
-                new List<InputDirection>
-                {
-                    InputDirection.Bottom,
-                    InputDirection.LowerLeft,
-                    InputDirection.Left
-                }
+                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                priority: 3
             ),
         };
 
@@ -51,32 +39,71 @@ namespace My.Command
         /// </summary>
         private void CheckCommands(List<InputFrameData> inputHistory)
         {
-            if (inputHistory.Last().NewlyPressedAttacks.Count <= 0) return;
+            var lastFrame = inputHistory.Last();
+            if (lastFrame.NewlyPressedAttacks.Count <= 0) return;
 
-            foreach (var pattern in _commandPatterns)
+            bool commandFound = false;
+
+            // 優先度の高い順に並べ替えて判定
+            foreach (var pattern in _commandPatterns.OrderBy(p => p.Priority))
             {
                 if (!pattern.IsMatch(inputHistory)) continue;
 
-                Debug.Log($"コマンド成立！ : {pattern.Name}");
+                Debug.Log($"必殺技成立！ : {pattern.Name}");
+                commandFound = true;
+                break; // 優先度の高いものを最初に採用
+            }
+
+            if (!commandFound)
+            {
+                foreach (var attack in lastFrame.NewlyPressedAttacks)
+                {
+                    CommandType normalAttack = ConvertToNormalAttack(lastFrame.Direction, attack);
+                    Debug.Log($"通常技成立！ : {normalAttack}");
+                }
             }
         }
 
         /// <summary>
-        /// 入力履歴の末尾がパターンと一致しているか判定
+        /// 攻撃ボタン＋方向から通常技を判定
         /// </summary>
-        private bool GetPatternStartIndex(List<InputFrameData> inputHistory, List<InputDirection> pattern)
+        private CommandType ConvertToNormalAttack(InputDirection direction, InputAttack attack)
         {
-            if (inputHistory.Count < pattern.Count) return false;
-
-            int startIndex = inputHistory.Count - pattern.Count;
-
-            for (int i = 0; i < pattern.Count; i++)
+            switch (attack)
             {
-                if (inputHistory[startIndex + i].Direction != pattern[i])
-                    return false;
-            }
+                case InputAttack.Punch_Weak:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Punch_Weak
+                        : CommandType.Stand_Punch_Weak;
 
-            return true;
+                case InputAttack.Punch_Middle:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Punch_Middle
+                        : CommandType.Stand_Punch_Middle;
+
+                case InputAttack.Punch_Strong:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Punch_Strong
+                        : CommandType.Stand_Punch_Strong;
+
+                case InputAttack.Kick_Weak:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Kick_Weak
+                        : CommandType.Stand_Kick_Weak;
+
+                case InputAttack.Kick_Middle:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Kick_Middle
+                        : CommandType.Stand_Kick_Middle;
+
+                case InputAttack.Kick_Strong:
+                    return direction == InputDirection.Bottom
+                        ? CommandType.Crouch_Kick_Strong
+                        : CommandType.Stand_Kick_Strong;
+
+                default:
+                    return CommandType.None;
+            }
         }
     }
 }
