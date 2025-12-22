@@ -7,7 +7,7 @@ namespace My.Command
 {
     public class CommandPattern
     {
-        public string Name { get; private set; }
+        public SpecialAttack SpecialAttack { get; private set; }
 
         /// <summary>
         /// 猶予フレーム
@@ -24,9 +24,9 @@ namespace My.Command
         /// </summary>
         public int Priority { get; private set; }
 
-        public CommandPattern(string name, float graceFrame, List<InputDirection> directions, int priority)
+        public CommandPattern(SpecialAttack specialAttack, float graceFrame, List<InputDirection> directions, int priority)
         {
-            Name = name;
+            SpecialAttack = specialAttack;
             GraceFrame = graceFrame;
             Directions = directions;
             Priority = priority;

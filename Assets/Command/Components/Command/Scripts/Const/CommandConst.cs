@@ -9,16 +9,21 @@ namespace My.Command
         public static float tatsumakiGraceFrame = 11f;
     }
 
-    public enum CommandType
+    // 必殺技
+    public enum SpecialAttack
     {
-        None,
-
         // 必殺技
         Syoryu,
         Hadou,
         Tatsumaki,
+    }
 
-        // 通常技（方向＋攻撃で区別）
+    /// <summary>
+    /// 通常技
+    /// </summary>
+    public enum NormalAttack
+    {
+        None,
         Stand_Punch_Weak,
         Stand_Punch_Middle,
         Stand_Punch_Strong,
