@@ -6,28 +6,12 @@ namespace My.Command
 {
     public class CommandModel
     {
-        private List<CommandPattern> _commandPatterns = new List<CommandPattern>
-        {
-            new CommandPattern(
-                SpecialAttack.Syoryu,
-                CommandConst.syoryuGraceFrame,
-                new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
-                priority: 1 // 昇竜拳を最優先
-            ),
-            new CommandPattern(
-                SpecialAttack.Hadou,
-                CommandConst.hadouGraceFrame,
-                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
-                priority: 2
-            ),
-            new CommandPattern(
-                SpecialAttack.Tatsumaki,
-                CommandConst.tatsumakiGraceFrame,
-                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                priority: 3
-            ),
-        };
+        private List<CommandPattern> _commandPatterns = new List<CommandPattern>();
 
+        public void UpdateCommand(List<CommandPattern> commandPatterns)
+        {
+            _commandPatterns = commandPatterns;
+        }
 
         public void ReceiveInput(List<InputFrameData> history)
         {
