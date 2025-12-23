@@ -10,17 +10,20 @@ namespace My.Command
     {
         private CommandModel _commandModel;
         private InputViewModel _inputViewModel;
+        private CharacterViewModel _characterViewModel;
 
         [Inject]
         public CommandViewModel
             (
                 CommandModel commandModel,
-                InputViewModel inputViewModel
+                InputViewModel inputViewModel,
+                CharacterViewModel characterViewModel
             )
         {
             //Debug.Log("CommandViewModel : Inject");
             _commandModel = commandModel;
             _inputViewModel = inputViewModel;
+            _characterViewModel = characterViewModel;
         }
 
         private IDisposable _disposable;
@@ -32,6 +35,12 @@ namespace My.Command
                 {
                     ReceiveInput(inputHistory);
                 });
+
+            _disposable = _characterViewModel.CharacterObservable
+                .Subscribe(character =>
+                {
+                    UpdateCommand(character.CommandPatterns);
+                });
         }
 
         public void Dispose()
@@ -42,6 +51,11 @@ namespace My.Command
         private void ReceiveInput(List<InputFrameData> inputHistory)
         {
             _commandModel.ReceiveInput(inputHistory);
+        }
+
+        public void UpdateCommand(List<CommandPattern> commandPatterns)
+        {
+            _commandModel.UpdateCommand(commandPatterns);
         }
     }
 }

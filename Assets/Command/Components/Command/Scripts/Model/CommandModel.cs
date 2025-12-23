@@ -6,28 +6,12 @@ namespace My.Command
 {
     public class CommandModel
     {
-        private List<CommandPattern> _commandPatterns = new List<CommandPattern>
-        {
-            new CommandPattern(
-                "syoryu",
-                CommandConst.syoryuGraceFrame,
-                new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
-                priority: 1 // 昇竜拳を最優先
-            ),
-            new CommandPattern(
-                "hadou",
-                CommandConst.hadouGraceFrame,
-                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
-                priority: 2
-            ),
-            new CommandPattern(
-                "tatsumaki",
-                CommandConst.tatsumakiGraceFrame,
-                new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                priority: 3
-            ),
-        };
+        private List<CommandPattern> _commandPatterns = new List<CommandPattern>();
 
+        public void UpdateCommand(List<CommandPattern> commandPatterns)
+        {
+            _commandPatterns = commandPatterns;
+        }
 
         public void ReceiveInput(List<InputFrameData> history)
         {
@@ -49,7 +33,7 @@ namespace My.Command
             {
                 if (!pattern.IsMatch(inputHistory)) continue;
 
-                Debug.Log($"必殺技成立！ : {pattern.Name}");
+                Debug.Log($"必殺技成立！ : {pattern.SpecialAttack}");
                 commandFound = true;
                 break; // 優先度の高いものを最初に採用
             }
@@ -58,7 +42,7 @@ namespace My.Command
             {
                 foreach (var attack in lastFrame.NewlyPressedAttacks)
                 {
-                    CommandType normalAttack = ConvertToNormalAttack(lastFrame.Direction, attack);
+                    NormalAttack normalAttack = ConvertToNormalAttack(lastFrame.Direction, attack);
                     Debug.Log($"通常技成立！ : {normalAttack}");
                 }
             }
@@ -67,42 +51,42 @@ namespace My.Command
         /// <summary>
         /// 攻撃ボタン＋方向から通常技を判定
         /// </summary>
-        private CommandType ConvertToNormalAttack(InputDirection direction, InputAttack attack)
+        private NormalAttack ConvertToNormalAttack(InputDirection direction, InputAttack attack)
         {
             switch (attack)
             {
                 case InputAttack.Punch_Weak:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Punch_Weak
-                        : CommandType.Stand_Punch_Weak;
+                        ? NormalAttack.Crouch_Punch_Weak
+                        : NormalAttack.Stand_Punch_Weak;
 
                 case InputAttack.Punch_Middle:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Punch_Middle
-                        : CommandType.Stand_Punch_Middle;
+                        ? NormalAttack.Crouch_Punch_Middle
+                        : NormalAttack.Stand_Punch_Middle;
 
                 case InputAttack.Punch_Strong:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Punch_Strong
-                        : CommandType.Stand_Punch_Strong;
+                        ? NormalAttack.Crouch_Punch_Strong
+                        : NormalAttack.Stand_Punch_Strong;
 
                 case InputAttack.Kick_Weak:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Kick_Weak
-                        : CommandType.Stand_Kick_Weak;
+                        ? NormalAttack.Crouch_Kick_Weak
+                        : NormalAttack.Stand_Kick_Weak;
 
                 case InputAttack.Kick_Middle:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Kick_Middle
-                        : CommandType.Stand_Kick_Middle;
+                        ? NormalAttack.Crouch_Kick_Middle
+                        : NormalAttack.Stand_Kick_Middle;
 
                 case InputAttack.Kick_Strong:
                     return direction == InputDirection.Bottom
-                        ? CommandType.Crouch_Kick_Strong
-                        : CommandType.Stand_Kick_Strong;
+                        ? NormalAttack.Crouch_Kick_Strong
+                        : NormalAttack.Stand_Kick_Strong;
 
                 default:
-                    return CommandType.None;
+                    return NormalAttack.None;
             }
         }
     }

@@ -7,7 +7,7 @@ namespace My.Command
     {
         public override void InstallBindings()
         {
-            Debug.Log("InputInstaller : InstallBindings");
+            //Debug.Log("InputInstaller : InstallBindings");
 
             Container.Bind<InputModel>().AsSingle();
             Container.Bind<InputViewModel>().AsSingle();

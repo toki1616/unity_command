@@ -9,6 +9,7 @@ namespace My.Command
         {
             InputInstaller.Install(Container);
             CommandInstaller.Install(Container);
+            CharacterInstaller.Install(Container);
         }
     }
 }
