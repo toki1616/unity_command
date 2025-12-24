@@ -19,18 +19,21 @@ namespace My.Command
                         SpecialAttack.Syoryu,
                         CommandConst.syoryuGraceFrame,
                         new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
+                        1f,
                         priority: 1 // 昇竜拳を最優先
                     ),
                     new CommandPattern(
                         SpecialAttack.Hadou,
                         CommandConst.hadouGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        1f,
                         priority: 2
                     ),
                     new CommandPattern(
                         SpecialAttack.Tatsumaki,
                         CommandConst.tatsumakiGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        1f,
                         priority: 3
                     ),
                 }
@@ -44,18 +47,21 @@ namespace My.Command
                         SpecialAttack.Syoryu,
                         CommandConst.syoryuGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.Bottom },
+                        1f,
                         priority: 1 // 昇竜拳を最優先
                     ),
                     new CommandPattern(
                         SpecialAttack.Hadou,
                         CommandConst.hadouGraceFrame,
                         new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        45f,
                         priority: 2
                     ),
                     new CommandPattern(
                         SpecialAttack.Tatsumaki,
                         CommandConst.tatsumakiGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        1f,
                         priority: 3
                     ),
                 }
@@ -69,18 +75,21 @@ namespace My.Command
                         SpecialAttack.Syoryu,
                         CommandConst.syoryuGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
+                        45f,
                         priority: 1 // 昇竜拳を最優先
                     ),
                     new CommandPattern(
                         SpecialAttack.Hadou,
                         CommandConst.hadouGraceFrame,
                         new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        45f,
                         priority: 2
                     ),
                     new CommandPattern(
                         SpecialAttack.Tatsumaki,
                         CommandConst.tatsumakiGraceFrame,
                         new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        1f,
                         priority: 3
                     ),
                 }
