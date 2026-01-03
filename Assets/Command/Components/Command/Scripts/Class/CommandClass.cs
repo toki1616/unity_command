@@ -46,10 +46,12 @@ namespace My.Command
 
             // 方向パターンが一致しているか
             bool directionMatch = CheckDirectionPattern(graceList);
+            //Debug.Log($"directionMatch : {directionMatch}");
             if (!directionMatch) return false;
 
             // チャージが必要なら判定
             bool chargeMatch = CheckCharge(graceList);
+            //Debug.Log($"chargeMatch : {chargeMatch}");
             return CheckCharge(graceList);
         }
 
@@ -76,11 +78,25 @@ namespace My.Command
         }
 
         /// <summary>
-        /// コマンドが成立しているか判定
+        /// コマンドの方向の判定
         /// </summary>
         /// <param name="inputHistory"></param>
         /// <returns></returns>
         private bool CheckDirectionPattern(List<InputFrameData> inputHistory)
+        {
+            // 溜め技
+            if (ChargeFrame > 1)
+                return CheckChargeDirection(inputHistory);
+
+            return CheckNormalDirectionPattern(inputHistory);
+        }
+
+        /// <summary>
+        /// コマンドが成立しているか判定
+        /// </summary>
+        /// <param name="inputHistory"></param>
+        /// <returns></returns>
+        private bool CheckNormalDirectionPattern(List<InputFrameData> inputHistory)
         {
             //Neutralを省く
             var filteredHistory = inputHistory
@@ -104,6 +120,31 @@ namespace My.Command
                 if (match) return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// 溜め技の入力判定
+        /// </summary>
+        /// <param name="inputHistory"></param>
+        /// <returns></returns>
+        private bool CheckChargeDirection(List<InputFrameData> inputHistory)
+        {
+            var chargeDir = Directions[0];
+            var releaseDir = Directions[1];
+
+            bool hasCharge = false;
+            bool hasRelease = false;
+
+            foreach (var frame in inputHistory)
+            {
+                if (frame.Direction == chargeDir)
+                    hasCharge = true;
+
+                if (hasCharge && frame.Direction == releaseDir)
+                    hasRelease = true;
+            }
+
+            return hasCharge && hasRelease;
         }
 
         /// <summary>
