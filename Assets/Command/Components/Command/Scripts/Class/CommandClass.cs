@@ -85,7 +85,7 @@ namespace My.Command
         private bool CheckDirectionPattern(List<InputFrameData> inputHistory)
         {
             // 溜め技
-            if (ChargeFrame > 1)
+            if (ChargeFrame > 1) 
                 return CheckChargeDirection(inputHistory);
 
             return CheckNormalDirectionPattern(inputHistory);
@@ -103,24 +103,33 @@ namespace My.Command
                 .Where(f => f.Direction != InputDirection.Neutral)
                 .ToList();
 
-            if (filteredHistory.Count < Directions.Count) return false;
+            if (filteredHistory.Count < Directions.Count) 
+                return false;
 
-            //
+            //緩和判定を使って順番マッチ
             for (int startIndex = 0; startIndex <= filteredHistory.Count - Directions.Count; startIndex++)
             {
                 bool match = true;
+
                 for (int i = 0; i < Directions.Count; i++)
                 {
-                    if (filteredHistory[startIndex + i].Direction != Directions[i])
+                    var inputDir = filteredHistory[startIndex + i].Direction;
+                    var requiredDir = Directions[i];
+
+                    if (!DirectionHelper.IsDirectionMatch(inputDir, requiredDir))
                     {
                         match = false;
                         break;
                     }
                 }
-                if (match) return true;
+
+                if (match) 
+                    return true;
             }
+
             return false;
         }
+
 
         /// <summary>
         /// 溜め技の入力判定
@@ -137,15 +146,18 @@ namespace My.Command
 
             foreach (var frame in inputHistory)
             {
-                if (frame.Direction == chargeDir)
+                // 溜め方向の緩和判定
+                if (DirectionHelper.IsDirectionMatch(frame.Direction, chargeDir))
                     hasCharge = true;
 
-                if (hasCharge && frame.Direction == releaseDir)
+                // 溜めが成立した後、解放方向の緩和判定
+                if (hasCharge && DirectionHelper.IsDirectionMatch(frame.Direction, releaseDir))
                     hasRelease = true;
             }
 
             return hasCharge && hasRelease;
         }
+
 
         /// <summary>
         /// 初めのDirectionの方向がChargeFrame分入力されているか判定
@@ -154,14 +166,18 @@ namespace My.Command
         /// <returns></returns>
         private bool CheckCharge(List<InputFrameData> inputHistory)
         {
-            if (ChargeFrame <= 1) return true;
+            if (ChargeFrame <= 1)
+                return true;
 
             for (int i = inputHistory.Count - 1; i >= 0; i--)
             {
                 var frame = inputHistory[i];
 
-                if (frame.Direction != Directions[0]) continue;
-                if (frame.holdFrame >= ChargeFrame) return true;
+                if (frame.Direction != Directions[0])
+                    continue;
+
+                if (frame.holdFrame >= ChargeFrame)
+                    return true;
             }
 
             return false;
