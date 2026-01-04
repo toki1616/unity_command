@@ -35,7 +35,7 @@ namespace My.Command
 
                 Debug.Log($"必殺技成立！ : {pattern.SpecialAttack}");
                 commandFound = true;
-                break; // 優先度の高いものを最初に採用
+                break;
             }
 
             if (!commandFound)
