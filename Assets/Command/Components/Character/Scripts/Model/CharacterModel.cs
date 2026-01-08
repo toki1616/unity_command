@@ -83,7 +83,7 @@ namespace My.Command
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
                         chargeFrame: 45f,
                         priority: 1,
-                        isMitigation: true
+                        isMitigation: false
                     ),
                     new CommandPattern(
                         specialAttack: SpecialAttack.Hadou,
@@ -91,7 +91,7 @@ namespace My.Command
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
                         chargeFrame: 45f,
                         priority: 2,
-                        isMitigation: false
+                        isMitigation: true
                     ),
                     new CommandPattern(
                         specialAttack: SpecialAttack.Tatsumaki,
