@@ -56,9 +56,9 @@ namespace My.Command
                     ),
                     new CommandPattern(
                         specialAttack: SpecialAttack.Hadou,
-                        graceFrame: CommandConst.hadouGraceFrame,
+                        graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
-                        chargeFrame: 45f,
+                        chargeFrame: CommandConst.chargeFrame,
                         priority: 2,
                         isMitigation: true
                     ),
@@ -79,17 +79,17 @@ namespace My.Command
                 {
                     new CommandPattern(
                         specialAttack: SpecialAttack.Syoryu,
-                        graceFrame: CommandConst.syoryuGraceFrame,
+                        graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
-                        chargeFrame: 45f,
+                        chargeFrame: CommandConst.chargeFrame,
                         priority: 1,
                         isMitigation: false
                     ),
                     new CommandPattern(
                         specialAttack: SpecialAttack.Hadou,
-                        graceFrame: CommandConst.hadouGraceFrame,
+                        graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
-                        chargeFrame: 45f,
+                        chargeFrame: CommandConst.chargeFrame,
                         priority: 2,
                         isMitigation: true
                     ),
