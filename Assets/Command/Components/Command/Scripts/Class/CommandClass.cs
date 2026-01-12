@@ -247,6 +247,7 @@ namespace My.Command
             if (ChargeFrame <= 1)
                 return true;
 
+            float totalCharge = 0f;
             for (int i = inputHistory.Count - 1; i >= 0; i--)
             {
                 var frame = inputHistory[i];
@@ -254,7 +255,8 @@ namespace My.Command
                 if (frame.Direction != Directions[0])
                     continue;
 
-                if (frame.holdFrame >= ChargeFrame)
+                totalCharge += frame.holdFrame;
+                if (totalCharge >= ChargeFrame)
                     return true;
             }
 
@@ -271,14 +273,16 @@ namespace My.Command
             if (ChargeFrame <= 1)
                 return true;
 
+            float totalCharge = 0f;
             for (int i = inputHistory.Count - 1; i >= 0; i--)
             {
                 var frame = inputHistory[i];
 
-                if (DirectionHelper.IsDirectionMatch(frame.Direction, Directions[0]))
+                if (!DirectionHelper.IsDirectionMatch(frame.Direction, Directions[0]))
                     continue;
 
-                if (frame.holdFrame >= ChargeFrame)
+                totalCharge += frame.holdFrame;
+                if (totalCharge >= ChargeFrame)
                     return true;
             }
 
