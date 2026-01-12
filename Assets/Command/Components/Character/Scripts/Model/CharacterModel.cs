@@ -16,25 +16,28 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
-                        SpecialAttack.Syoryu,
-                        CommandConst.syoryuGraceFrame,
-                        new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
-                        1f,
-                        priority: 1 // 昇竜拳を最優先
+                        specialAttack: SpecialAttack.Syoryu,
+                        graceFrame: CommandConst.syoryuGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
+                        chargeFrame: 1f,
+                        priority: 1,
+                        isMitigation: true
                     ),
                     new CommandPattern(
-                        SpecialAttack.Hadou,
-                        CommandConst.hadouGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
-                        1f,
-                        priority: 2
+                        specialAttack: SpecialAttack.Hadou,
+                        graceFrame: CommandConst.hadouGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        chargeFrame: 1f,
+                        priority: 2,
+                        isMitigation: false
                     ),
                     new CommandPattern(
-                        SpecialAttack.Tatsumaki,
-                        CommandConst.tatsumakiGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                        1f,
-                        priority: 3
+                        specialAttack: SpecialAttack.Tatsumaki,
+                        graceFrame: CommandConst.tatsumakiGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        chargeFrame: 1f,
+                        priority: 3,
+                        isMitigation: false
                     ),
                 }
             ),
@@ -44,25 +47,28 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
-                        SpecialAttack.Syoryu,
-                        CommandConst.syoryuGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.Bottom },
-                        1f,
-                        priority: 1 // 昇竜拳を最優先
+                        specialAttack: SpecialAttack.Syoryu,
+                        graceFrame: CommandConst.syoryuGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Bottom },
+                        chargeFrame: 1f,
+                        priority: 1,
+                        isMitigation: false
                     ),
                     new CommandPattern(
-                        SpecialAttack.Hadou,
-                        CommandConst.hadouGraceFrame,
-                        new List<InputDirection> { InputDirection.Left, InputDirection.Right },
-                        45f,
-                        priority: 2
+                        specialAttack: SpecialAttack.Hadou,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        chargeFrame: CommandConst.chargeFrame,
+                        priority: 2,
+                        isMitigation: true
                     ),
                     new CommandPattern(
-                        SpecialAttack.Tatsumaki,
-                        CommandConst.tatsumakiGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                        1f,
-                        priority: 3
+                        specialAttack: SpecialAttack.Tatsumaki,
+                        graceFrame: CommandConst.tatsumakiGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        chargeFrame: 1f,
+                        priority: 3,
+                        isMitigation: false
                     ),
                 }
             ),
@@ -72,25 +78,28 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
-                        SpecialAttack.Syoryu,
-                        CommandConst.syoryuGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
-                        45f,
-                        priority: 1 // 昇竜拳を最優先
+                        specialAttack: SpecialAttack.Syoryu,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
+                        chargeFrame: CommandConst.chargeFrame,
+                        priority: 1,
+                        isMitigation: false
                     ),
                     new CommandPattern(
-                        SpecialAttack.Hadou,
-                        CommandConst.hadouGraceFrame,
-                        new List<InputDirection> { InputDirection.Left, InputDirection.Right },
-                        45f,
-                        priority: 2
+                        specialAttack: SpecialAttack.Hadou,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        chargeFrame: CommandConst.chargeFrame,
+                        priority: 2,
+                        isMitigation: true
                     ),
                     new CommandPattern(
-                        SpecialAttack.Tatsumaki,
-                        CommandConst.tatsumakiGraceFrame,
-                        new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                        1f,
-                        priority: 3
+                        specialAttack: SpecialAttack.Tatsumaki,
+                        graceFrame: CommandConst.tatsumakiGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        chargeFrame: 1f,
+                        priority: 3,
+                        isMitigation: false
                     ),
                 }
             ),

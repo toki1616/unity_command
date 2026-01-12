@@ -7,6 +7,8 @@ namespace My.Command
         public static float syoryuGraceFrame = 11f;
         public static float hadouGraceFrame = 11f;
         public static float tatsumakiGraceFrame = 11f;
+        public static float chargeFrame = 45f;
+        public static float chargeGraceFrame = 30f;
     }
 
     // 必殺技
