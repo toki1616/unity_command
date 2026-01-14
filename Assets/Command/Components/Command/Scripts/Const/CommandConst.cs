@@ -18,6 +18,9 @@ namespace My.Command
         Syoryu,
         Hadou,
         Tatsumaki,
+        SA1,
+        SA2,
+        SA3,
     }
 
     /// <summary>

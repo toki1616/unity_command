@@ -16,11 +16,19 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
+                        specialAttack: SpecialAttack.SA1,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        chargeFrame: 1f,
+                        priority: 1,
+                        isMitigation: false
+                    ),
+                    new CommandPattern(
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.syoryuGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
                         chargeFrame: 1f,
-                        priority: 1,
+                        priority: 2,
                         isMitigation: true
                     ),
                     new CommandPattern(
@@ -28,7 +36,7 @@ namespace My.Command
                         graceFrame: CommandConst.hadouGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
                         chargeFrame: 1f,
-                        priority: 2,
+                        priority: 3,
                         isMitigation: false
                     ),
                     new CommandPattern(
@@ -36,7 +44,7 @@ namespace My.Command
                         graceFrame: CommandConst.tatsumakiGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
                         chargeFrame: 1f,
-                        priority: 3,
+                        priority: 4,
                         isMitigation: false
                     ),
                 }
@@ -47,11 +55,19 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
+                        specialAttack: SpecialAttack.SA1,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        chargeFrame: 1f,
+                        priority: 1,
+                        isMitigation: false
+                    ),
+                    new CommandPattern(
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.syoryuGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Bottom },
                         chargeFrame: 1f,
-                        priority: 1,
+                        priority: 2,
                         isMitigation: false
                     ),
                     new CommandPattern(
@@ -59,7 +75,7 @@ namespace My.Command
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
                         chargeFrame: CommandConst.chargeFrame,
-                        priority: 2,
+                        priority: 3,
                         isMitigation: true
                     ),
                     new CommandPattern(
@@ -67,7 +83,7 @@ namespace My.Command
                         graceFrame: CommandConst.tatsumakiGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
                         chargeFrame: 1f,
-                        priority: 3,
+                        priority: 4,
                         isMitigation: false
                     ),
                 }
@@ -78,11 +94,27 @@ namespace My.Command
                 new List<CommandPattern>
                 {
                     new CommandPattern(
+                        specialAttack: SpecialAttack.SA1,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right, InputDirection.Left, InputDirection.Right },
+                        chargeFrame: CommandConst.chargeFrame,
+                        priority: 1,
+                        isMitigation: true
+                    ),
+                    new CommandPattern(
+                        specialAttack: SpecialAttack.SA2,
+                        graceFrame: CommandConst.chargeGraceFrame,
+                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top, InputDirection.Bottom, InputDirection.Top },
+                        chargeFrame: CommandConst.chargeFrame,
+                        priority: 2,
+                        isMitigation: true
+                    ),
+                    new CommandPattern(
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
                         chargeFrame: CommandConst.chargeFrame,
-                        priority: 1,
+                        priority: 3,
                         isMitigation: false
                     ),
                     new CommandPattern(
@@ -90,16 +122,8 @@ namespace My.Command
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
                         chargeFrame: CommandConst.chargeFrame,
-                        priority: 2,
+                        priority: 4,
                         isMitigation: true
-                    ),
-                    new CommandPattern(
-                        specialAttack: SpecialAttack.Tatsumaki,
-                        graceFrame: CommandConst.tatsumakiGraceFrame,
-                        directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
-                        chargeFrame: 1f,
-                        priority: 3,
-                        isMitigation: false
                     ),
                 }
             ),
