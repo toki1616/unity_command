@@ -1,13 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
-public class CharacterFactoryInstaller : MonoInstaller
+namespace My.Command
 {
-    [SerializeField] private Transform _spawnRoot;
-    [SerializeField] private GameObject _characterSelectUIPrefab;
-
-    public override void InstallBindings()
+    public class CharacterFactoryInstaller : MonoInstaller
     {
-        Container.Bind<CharacterSelectFactory>().AsSingle().WithArguments(_spawnRoot, _characterSelectUIPrefab);
+        [SerializeField]
+        private Transform _spawnRoot;
+
+        [SerializeField]
+        private GameObject _characterSelectUIPrefab;
+
+        [SerializeField]
+        private ToggleGroup _toggleGroup;
+
+        public override void InstallBindings()
+        {
+            Container.Bind<CharacterSelectFactory>().AsSingle().WithArguments(_spawnRoot, _characterSelectUIPrefab, _toggleGroup);
+        }
     }
 }

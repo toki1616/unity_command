@@ -1,21 +1,30 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
-public class CharacterSelectFactory : IFactory<GameObject>
+namespace My.Command
 {
-    private readonly Transform _spawnRoot;
-    private readonly DiContainer _container;
-    private readonly GameObject _prefab;
-
-    public CharacterSelectFactory(Transform spawnRoot, DiContainer container, GameObject prefab)
+    public class CharacterSelectFactory : IFactory<GameObject>
     {
-        _spawnRoot = spawnRoot;
-        _container = container;
-        _prefab = prefab;
-    }
+        private readonly DiContainer _container;
+        private readonly Transform _spawnRoot;
+        private readonly GameObject _prefab;
+        private readonly ToggleGroup _toggleGroup;
 
-    public GameObject Create()
-    {
-        return _container.InstantiatePrefab(_prefab, _spawnRoot);
+        public CharacterSelectFactory(DiContainer container, Transform spawnRoot, GameObject prefab, ToggleGroup toggleGroup)
+        {
+            _container = container;
+            _spawnRoot = spawnRoot;
+            _prefab = prefab;
+            _toggleGroup = toggleGroup;
+        }
+
+        public GameObject Create()
+        {
+            var view = _container.InstantiatePrefabForComponent<CharacterSelectView>(_prefab, _spawnRoot);
+            view.SetToggleGroup(_toggleGroup);
+            
+            return view.gameObject;
+        }
     }
 }
