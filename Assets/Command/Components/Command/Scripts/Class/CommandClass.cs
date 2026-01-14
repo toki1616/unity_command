@@ -184,22 +184,21 @@ namespace My.Command
         /// <returns></returns>
         private bool CheckChargeDirection(List<InputFrameData> inputHistory)
         {
-            var chargeDir = Directions[0];
-            var releaseDir = Directions[1];
-
-            bool hasCharge = false;
-            bool hasRelease = false;
+            int index = 0;
 
             foreach (var frame in inputHistory)
             {
-                if (frame.Direction == chargeDir)
-                    hasCharge = true;
+                if (frame.Direction == Directions[index])
+                {
+                    index++;
 
-                if (hasCharge && frame.Direction == releaseDir)
-                    hasRelease = true;
+                    // 全ての方向が一致したら成功
+                    if (index >= Directions.Count)
+                        return true;
+                }
             }
 
-            return hasCharge && hasRelease;
+            return false;
         }
         
         /// <summary>
@@ -209,26 +208,23 @@ namespace My.Command
         /// <returns></returns>
         private bool CheckMitigationChargeDirection(List<InputFrameData> inputHistory)
         {
-            var chargeDir = Directions[0];
-            var releaseDir = Directions[1];
-
-            bool hasCharge = false;
-            bool hasRelease = false;
+            int index = 0;
 
             foreach (var frame in inputHistory)
             {
-                // 溜め方向の緩和判定
-                if (DirectionHelper.IsDirectionMatch(frame.Direction, chargeDir))
-                    hasCharge = true;
+                if (DirectionHelper.IsDirectionMatch(frame.Direction, Directions[index]))
+                {
+                    index++;
 
-                // 溜めが成立した後、解放方向の緩和判定
-                if (hasCharge && DirectionHelper.IsDirectionMatch(frame.Direction, releaseDir))
-                    hasRelease = true;
+                    if (index >= Directions.Count)
+                        return true;
+                }
             }
 
-            return hasCharge && hasRelease;
+            return false;
+
         }
-        
+
         private bool isChargeSuccess(List<InputFrameData> inputHistory)
         {
             if (IsMitigation)
