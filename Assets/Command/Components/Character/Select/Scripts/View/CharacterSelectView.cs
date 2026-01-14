@@ -14,7 +14,10 @@ namespace My.Command
         }
 
         [SerializeField]
-        private Button _button;
+        private Toggle _toggle;
+
+        [SerializeField]
+        private Image backgroundImage;
 
         [SerializeField]
         private Text _text;
@@ -24,7 +27,12 @@ namespace My.Command
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            _button.OnClickAsObservable().Subscribe(_ => SelectCharacter()).AddTo(this);
+            _toggle.OnValueChangedAsObservable().Subscribe(_ => OnChangeToggle(_)).AddTo(this);
+        }
+
+        public void SetToggleGroup(ToggleGroup toggleGroup)
+        {
+            _toggle.group = toggleGroup;
         }
 
         public void SetCharacterData(CharacterData characterData)
@@ -33,7 +41,25 @@ namespace My.Command
             _text.text = characterData.Character.GetName();
         }
 
-        public void SelectCharacter()
+        private void OnChangeToggle(bool isActive)
+        {
+            UpdateColor();
+
+            if (!isActive) 
+                return;
+
+            SelectCharacter();
+        }
+
+        void UpdateColor()
+        {
+            if (_toggle.isOn)
+                backgroundImage.color = ColorConst.toggleSelectColor;
+            else
+                backgroundImage.color = ColorConst.toggleNormalColor;
+        }
+
+        private void SelectCharacter()
         {
             _characterViewModel.UpdateCharacter(_characterData.Character);
         }

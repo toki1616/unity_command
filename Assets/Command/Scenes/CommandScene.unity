@@ -346,6 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnRoot: {fileID: 1310512957}
   _characterSelectUIPrefab: {fileID: 2776263597360828699, guid: 9cb36ed5e5db53e4bb4579c5b2aac8e9, type: 3}
+  _toggleGroup: {fileID: 2104501633}
 --- !u!1 &593032507
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2595205947353367050, guid: 353d1ec69eb316b459ae29b669424c0c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000014409134
+      value: 0.0000588228
       objectReference: {fileID: 0}
     - target: {fileID: 3109900990815294708, guid: 353d1ec69eb316b459ae29b669424c0c, type: 3}
       propertyPath: m_Pivot.x
@@ -1053,6 +1054,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3109900990815294708, guid: 353d1ec69eb316b459ae29b669424c0c, type: 3}
   m_PrefabInstance: {fileID: 2104501631}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2104501633 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8425612124752379845, guid: 353d1ec69eb316b459ae29b669424c0c, type: 3}
+  m_PrefabInstance: {fileID: 2104501631}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1642106412405054200
 PrefabInstance:
   m_ObjectHideFlags: 0
