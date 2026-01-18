@@ -20,6 +20,11 @@ namespace My.Command
         public List<InputDirection> Directions { get; private set; }
 
         /// <summary>
+        /// コマンドの成立するAttackButtonType
+        /// </summary>
+        public AttackType AttackType { get; private set; }
+
+        /// <summary>
         /// コマンドの溜めフレーム
         /// </summary>
         public float ChargeFrame { get; private set; }
@@ -31,11 +36,12 @@ namespace My.Command
         
         public bool IsMitigation { get; private set; }
 
-        public CommandPattern(SpecialAttack specialAttack, float graceFrame, List<InputDirection> directions, float chargeFrame, int priority, bool isMitigation)
+        public CommandPattern(SpecialAttack specialAttack, float graceFrame, List<InputDirection> directions, AttackType attackType, float chargeFrame, int priority, bool isMitigation)
         {
             SpecialAttack = specialAttack;
             GraceFrame = graceFrame;
             Directions = directions;
+            AttackType = attackType;
             ChargeFrame = chargeFrame;
             Priority = priority;
             IsMitigation = isMitigation;
@@ -47,12 +53,17 @@ namespace My.Command
 
             var graceList = GetGraceFrameHistory(inputHistory, GraceFrame);
 
-            // 方向パターンが一致しているか
+            //AttckTypeが一致しているか
+            bool isMatchAttackType = IsMatchAttackType(graceList);
+            Debug.Log($"command : attackTypeMatch : {isMatchAttackType}");
+            if (!isMatchAttackType) return false;
+
+            //方向パターンが一致しているか
             bool directionMatch = CheckDirectionPattern(graceList);
             Debug.Log($"command : directionMatch : {directionMatch}");
             if (!directionMatch) return false;
 
-            // チャージが必要なら判定
+            //チャージが必要なら判定
             bool chargeMatch = isChargeSuccess(graceList);
             Debug.Log($"command : chargeMatch : {chargeMatch}");
             return chargeMatch;
@@ -78,6 +89,22 @@ namespace My.Command
                     break;
             }
             return graceList;
+        }
+
+        private bool IsMatchAttackType(List<InputFrameData> inputHistory)
+        {
+            var lastFrame = inputHistory.Last();
+            if (lastFrame.NewlyPressedAttacks.Count <= 0) return false;
+
+            foreach (var inputAttack in lastFrame.NewlyPressedAttacks)
+            {
+                if (AttackType == inputAttack.ToAttackType())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

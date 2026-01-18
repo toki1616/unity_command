@@ -23,6 +23,12 @@ namespace My.Command
         SA3,
     }
 
+    public enum AttackType
+    {
+        Punch,
+        Kick
+    }
+
     /// <summary>
     /// 通常技
     /// </summary>
