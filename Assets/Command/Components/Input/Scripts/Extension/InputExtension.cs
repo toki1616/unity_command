@@ -26,5 +26,24 @@ namespace My.Command
                 _ => isActive ? CommandColors.directionActiveColor : CommandColors.directionEnactiveColor
             };
         }
+
+        /// <summary>
+        /// NormalAttackをAttackButtonTypeに変換
+        /// </summary>
+        /// <param name="attack"></param>
+        /// <returns></returns>
+        public static AttackType ToAttackType(this InputAttack attack)
+        {
+            string name = attack.ToString();
+
+            if (name.Contains("Punch"))
+                return AttackType.Punch;
+
+            if (name.Contains("Kick"))
+                return AttackType.Kick;
+
+            Debug.LogWarning($"Unknown NormalAttack type: {attack}");
+            return AttackType.Punch;
+        }
     }
 }

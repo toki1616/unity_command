@@ -19,6 +19,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.SA1,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: 1f,
                         priority: 1,
                         isMitigation: false
@@ -27,6 +28,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.syoryuGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight },
+                        attackType: AttackType.Punch,
                         chargeFrame: 1f,
                         priority: 2,
                         isMitigation: true
@@ -35,6 +37,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Hadou,
                         graceFrame: CommandConst.hadouGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: 1f,
                         priority: 3,
                         isMitigation: false
@@ -43,6 +46,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Tatsumaki,
                         graceFrame: CommandConst.tatsumakiGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        attackType: AttackType.Kick,
                         chargeFrame: 1f,
                         priority: 4,
                         isMitigation: false
@@ -58,6 +62,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.SA1,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right, InputDirection.Bottom, InputDirection.LowerRight, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: 1f,
                         priority: 1,
                         isMitigation: false
@@ -66,6 +71,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.syoryuGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Bottom },
+                        attackType: AttackType.Kick,
                         chargeFrame: 1f,
                         priority: 2,
                         isMitigation: false
@@ -74,6 +80,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Hadou,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: CommandConst.chargeFrame,
                         priority: 3,
                         isMitigation: true
@@ -82,6 +89,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Tatsumaki,
                         graceFrame: CommandConst.tatsumakiGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.LowerLeft, InputDirection.Left },
+                        attackType: AttackType.Kick,
                         chargeFrame: 1f,
                         priority: 4,
                         isMitigation: false
@@ -97,6 +105,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.SA1,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right, InputDirection.Left, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: CommandConst.chargeFrame,
                         priority: 1,
                         isMitigation: true
@@ -105,6 +114,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.SA2,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top, InputDirection.Bottom, InputDirection.Top },
+                        attackType: AttackType.Punch,
                         chargeFrame: CommandConst.chargeFrame,
                         priority: 2,
                         isMitigation: true
@@ -113,6 +123,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Syoryu,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Bottom, InputDirection.Top },
+                        attackType: AttackType.Kick,
                         chargeFrame: CommandConst.chargeFrame,
                         priority: 3,
                         isMitigation: false
@@ -121,6 +132,7 @@ namespace My.Command
                         specialAttack: SpecialAttack.Hadou,
                         graceFrame: CommandConst.chargeGraceFrame,
                         directions: new List<InputDirection> { InputDirection.Left, InputDirection.Right },
+                        attackType: AttackType.Punch,
                         chargeFrame: CommandConst.chargeFrame,
                         priority: 4,
                         isMitigation: true
