@@ -55,17 +55,17 @@ namespace My.Command
 
             //AttckTypeが一致しているか
             bool isMatchAttackType = IsMatchAttackType(graceList);
-            Debug.Log($"command : attackTypeMatch : {isMatchAttackType}");
+            //Debug.Log($"command : attackTypeMatch : {isMatchAttackType}");
             if (!isMatchAttackType) return false;
 
             //方向パターンが一致しているか
             bool directionMatch = CheckDirectionPattern(graceList);
-            Debug.Log($"command : directionMatch : {directionMatch}");
+            //Debug.Log($"command : directionMatch : {directionMatch}");
             if (!directionMatch) return false;
 
             //チャージが必要なら判定
             bool chargeMatch = isChargeSuccess(graceList);
-            Debug.Log($"command : chargeMatch : {chargeMatch}");
+            //Debug.Log($"command : chargeMatch : {chargeMatch}");
             return chargeMatch;
         }
 

@@ -57,5 +57,13 @@ namespace My.Command
         {
             _commandModel.UpdateCommand(commandPatterns);
         }
+
+        public Observable<SpecialAttack> SpecialAttackObservable =>
+            _commandModel.SpecialAttackObservable
+            .AsObservable();
+
+        public Observable<NormalAttack> NormalAttackObservable =>
+            _commandModel.NormalAttackObservable
+            .AsObservable();
     }
 }
