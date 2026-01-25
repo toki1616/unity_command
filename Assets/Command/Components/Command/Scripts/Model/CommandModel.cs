@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using R3;
 
 namespace My.Command
 {
@@ -18,6 +19,13 @@ namespace My.Command
             CheckCommands(history);
         }
 
+        // --- 外部へ通知するSubject ---
+        private readonly Subject<SpecialAttack> _onSpecialAttack = new Subject<SpecialAttack>();
+        private readonly Subject<NormalAttack> _onNormalAttack = new Subject<NormalAttack>();
+
+        public Observable<SpecialAttack> SpecialAttackObservable => _onSpecialAttack;
+        public Observable<NormalAttack> NormalAttackObservable => _onNormalAttack;
+
         /// <summary>
         /// コマンド判定
         /// </summary>
@@ -33,7 +41,8 @@ namespace My.Command
             {
                 if (!pattern.IsMatch(inputHistory)) continue;
 
-                Debug.Log($"必殺技成立！ : {pattern.SpecialAttack}");
+                //Debug.Log($"必殺技成立！ : {pattern.SpecialAttack}");
+                _onSpecialAttack.OnNext(pattern.SpecialAttack);
                 commandFound = true;
                 break;
             }
@@ -43,7 +52,8 @@ namespace My.Command
                 foreach (var attack in lastFrame.NewlyPressedAttacks)
                 {
                     NormalAttack normalAttack = ConvertToNormalAttack(lastFrame.Direction, attack);
-                    Debug.Log($"通常技成立！ : {normalAttack}");
+                    //Debug.Log($"通常技成立！ : {normalAttack}");
+                    _onNormalAttack.OnNext(normalAttack);
                 }
             }
         }
