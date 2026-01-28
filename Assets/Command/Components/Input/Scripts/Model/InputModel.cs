@@ -4,18 +4,24 @@ using System.Linq;
 using UnityEngine;
 using R3;
 using ObservableCollections;
+using Zenject;
 
 namespace My.Command
 {
-    public class InputModel
+    public class InputModel : ITickable
     {
-        public InputModel()
-        {
-            _subscription = Observable.EveryUpdate()
-                .Subscribe(_ => UpdatePerFrame());
-        }
+        private float _accumulator = 0f;
+        private const float FixedInterval = 1f / 60f; // 60fps = 0.016666秒
 
-        private IDisposable _subscription;
+        public void Tick() {
+            _accumulator += Time.deltaTime;
+
+            while (_accumulator >= FixedInterval)
+            {
+                UpdatePerFrame();
+                _accumulator -= FixedInterval;
+            }
+        }
 
         private readonly ReactiveProperty<InputDirection> _inputDirectionRP = new ReactiveProperty<InputDirection>(InputDirection.Neutral);
         public ReadOnlyReactiveProperty<InputDirection> InputDirectionRP => _inputDirectionRP;
