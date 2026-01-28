@@ -9,7 +9,8 @@ namespace My.Command
         {
             //Debug.Log("InputInstaller : InstallBindings");
 
-            Container.Bind<InputModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputModel>().AsSingle();
+
             Container.Bind<InputViewModel>().AsSingle();
         }
     }
